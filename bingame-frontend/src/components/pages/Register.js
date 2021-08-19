@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { useStyles } from '../Theme';
-import NavBar from '../NavBar';
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import { useStyles } from "../Theme";
+import { Container, CssBaseline } from "@material-ui/core";
+import clsx from "clsx";
 
 function Register() {
   const classes = useStyles();
@@ -16,41 +14,78 @@ function Register() {
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [error, setError] = useState("");
 
-  const registerHandler = async (e) => {}
+  const registerHandler = async (e) => {};
 
   return (
     <>
-      <Grid 
-        container
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '100vh', margin: "auto" }}
-        xs={11}
-        md={6}
-        lg={4}
-      > 
-   
-    <form onSubmit={registerHandler} className={classes.root}>
-        <Typography variant="h4" component="h2" gutterBottom style={{textTransform: 'uppercase'}}>
-           Register
-        </Typography>
-        {error && <span className="error">{error}</span>}
-        <TextField className={classes.input} fullWidth id="username" label="Username" variant="outlined" type="text"/>
-        <TextField className={classes.input} fullWidth id="email" label="Email" variant="outlined" type="email"/>
-        <TextField className={classes.input} fullWidth id="password" label="Password" variant="outlined" type="password"/>
-        <TextField className={classes.input} fullWidth id="confirmedPassword" label="Confirmed Password" variant="outlined" type="password"/>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <form onSubmit={registerHandler} className={classes.form}>
+            <Typography
+              variant="h4"
+              component="h2"
+              gutterBottom
+              className={classes.formTitle}
+              color="primary"
+            >
+              Sign Up
+            </Typography>
+            {error && <span className="error">{error}</span>}
+            <TextField
+              className={classes.input}
+              fullWidth
+              margin="normal"
+              required
+              id="username"
+              label="Username"
+              variant="outlined"
+              type="text"
+            />
+            <TextField
+              className={classes.input}
+              fullWidth
+              margin="normal"
+              required
+              id="email"
+              label="Email"
+              variant="outlined"
+              type="email"
+              autoComplete="email"
+            />
+            <TextField
+              className={classes.input}
+              fullWidth
+              margin="normal"
+              required
+              id="password"
+              label="Password"
+              variant="outlined"
+              type="password"
+            />
+            <TextField
+              className={classes.input}
+              fullWidth
+              margin="normal"
+              required
+              id="confirmedPassword"
+              label="Confirmed Password"
+              variant="outlined"
+              type="password"
+            />
 
-        <Button className={classes.btn} variant="outlined">Register</Button>
-        <p >
-          Already have an account?
-          <Link  to="/login" tabIndex={4}>
-            Log in
-          </Link>
-        </p>
-      </form>
-
-      </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={clsx(classes.btn, classes.margin)}
+            >
+              Sign Up
+            </Button>
+          </form>
+        </div>
+      </Container>
     </>
   );
 }

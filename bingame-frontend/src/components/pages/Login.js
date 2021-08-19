@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { useStyles } from '../Theme';
-import NavBar from '../NavBar';
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import { useStyles } from "../Theme";
+import Link from "@material-ui/core/Link";
+import {
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+} from "@material-ui/core";
+import clsx from "clsx";
 
 function Login() {
   const classes = useStyles();
@@ -14,39 +19,69 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const loginHandler = async (e) => {}
+  const loginHandler = async (e) => {};
   return (
     <>
-      <Grid 
-        container
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '100vh', margin: "auto" }}
-        xs={11}
-        md={6}
-        lg={4}
-      > 
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <form onSubmit={loginHandler} className={classes.form}>
+            <Typography
+              variant="h4"
+              component="h2"
+              gutterBottom
+              className={classes.formTitle}
+            >
+              Log in
+            </Typography>
+            {error && <span>{error}</span>}
+            <TextField
+              fullWidth
+              margin="normal"
+              required
+              id="email"
+              label="Email"
+              variant="outlined"
+              type="email"
+              autoComplete="email"
+              autoFocus
+            />
 
-    <form onSubmit={loginHandler} className={classes.root}>
-        <Typography variant="h4" component="h2" gutterBottom style={{textTransform: 'uppercase'}}>
-           Log in
-        </Typography>
-        {error && <span >{error}</span>}
-        <TextField className={classes.input} fullWidth id="email" label="Email" variant="outlined" type="email"/>
+            <TextField
+              fullWidth
+              margin="normal"
+              required
+              id="password"
+              label="Password"
+              variant="outlined"
+              type="password"
+              autoComplete="current-password"
+            />
 
-        <TextField className={classes.input} fullWidth id="password" label="Password" variant="outlined" type="password"/>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
 
-        <Button className={classes.btn} variant="outlined">Log in</Button>
-        <p>
-          Don't have account yet?
-          <Link to="/register" tabIndex={4}>
-            Register
-          </Link>
-        </p>
-      </form>
-
-      </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={clsx(classes.btn, classes.margin)}
+            >
+              Log In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="/forgotpassword" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
     </>
   );
 }
