@@ -22,7 +22,7 @@ function Login() {
   const loginHandler = async (e) => {};
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className={classes.grow}>
         <CssBaseline />
         <div className={classes.paper}>
           <form onSubmit={loginHandler} className={classes.form}>
@@ -73,11 +73,9 @@ function Login() {
               Log In
             </Button>
             <Grid container>
-              <Grid item xs>
                 <Link href="/forgotpassword" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
             </Grid>
           </form>
         </div>

@@ -18,7 +18,7 @@ function Register() {
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className={classes.grow}>
         <CssBaseline />
         <div className={classes.paper}>
           <form onSubmit={registerHandler} className={classes.form}>

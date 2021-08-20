@@ -14,7 +14,7 @@ function ForgotPassword() {
   const loginHandler = async (e) => {};
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className={classes.grow}>
         <CssBaseline />
         <div className={classes.paper}>
           <form onSubmit={loginHandler} className={classes.form}>

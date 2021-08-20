@@ -13,25 +13,40 @@ export const darkTheme = createTheme({
       main: lightBlue[50],
     },
   },
+  typography: {
+    fontFamily: [
+      'VT323',
+      'monospace'
+    ].join(','),
+  },
 });
 
 export const useStyles = makeStyles((theme) => ({
+  page: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
   margin: {
     margin: theme.spacing(2, "auto"),
   },
-  navBar: {
-    flexGrow: 1,
+  video: {
+    position: 'fixed',
+    right: 0,
+    bottom: 0,
+    minWidth: '100%',
+    minHeight: '100%',
+    zIndex: -1,
+  },
+  header: {
     "& .MuiAppBar-root": {
       backgroundColor: "#00b0ff94",
     },
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  footer: {
+    backgroundColor: "#00b0ff94",
   },
   grow: {
-    flexGrow: 1,
-  },
-  title: {
     flexGrow: 1,
   },
   neonBtn: {
@@ -39,6 +54,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "1.2rem",
     color: lightBlue[50],
     borderColor: "#4fc3f7",
+    backdropFilter: 'blur(10px)',
     boxShadow:
       "0 0 7px #fff, 0 0 12px #03a9f4, 0 0 22px #03a9f4, inset 0 0 7px #03a9f4",
     animation: `$pulsate 1s ${theme.transitions.easing.easeInOut} infinite alternate`,
@@ -56,7 +72,7 @@ export const useStyles = makeStyles((theme) => ({
   btn: {
     color: lightBlue[700],
     borderColor: lightBlue[500],
-    fontSize: "15px",
+    fontSize: "20px",
     "&:hover": {
       color: lightBlue[600],
       borderColor: lightBlue[400],
@@ -73,6 +89,8 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   form: {
+    backgroundColor: '#003c566e',
+    backdropFilter: 'blur(10px)',
     border: "1px solid #4fc3f7",
     padding: theme.spacing(5),
     borderRadius: "15px",
