@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
 import "./App.css";
 import MainPage from "./components/pages/MainPage.js";
 import Header from "./components/Header";
@@ -16,7 +17,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>
-        <div className={classes.page}>
+      <Grid container className={classes.page}>
           <Header />
           <video autoPlay muted loop className={classes.video}>
             <source src="video/bg.mp4" type="video/mp4" />
@@ -28,7 +29,7 @@ function App() {
             <Route exac path="/forgotpassword" component={ForgotPassword} />
           </Switch>
           <Footer />
-        </div>
+        </Grid>
       </Router>
     </ThemeProvider>
   );

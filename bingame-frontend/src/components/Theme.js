@@ -23,7 +23,6 @@ export const darkTheme = createTheme({
 
 export const useStyles = makeStyles((theme) => ({
   page: {
-    display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
   },

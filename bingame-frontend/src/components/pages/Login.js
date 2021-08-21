@@ -22,7 +22,7 @@ function Login() {
   const loginHandler = async (e) => {};
   return (
     <>
-      <Container component="main" maxWidth="xs" className={classes.grow}>
+      <Container component="main" maxWidth="sm" className={classes.grow}>
         <CssBaseline />
         <div className={classes.paper}>
           <form onSubmit={loginHandler} className={classes.form}>
