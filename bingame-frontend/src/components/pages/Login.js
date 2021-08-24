@@ -12,14 +12,43 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import clsx from "clsx";
+import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
 
-function Login() {
+function Login({history}) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const loginHandler = async (e) => {};
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/auth/login",
+        { email, password },
+        config
+      );
+      // localStorage.setItem("authToken", data.token);
+
+      history.push("/");
+    } catch (error) {
+      dispatch(showAlert({type: 'error', message: error.response.data.error, show: true}));
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
+    }
+
+  };
   return (
     <>
       <Container component="main" maxWidth="sm" className={classes.grow}>

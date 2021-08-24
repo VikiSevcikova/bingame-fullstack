@@ -22,6 +22,12 @@ export const darkTheme = createTheme({
 });
 
 export const useStyles = makeStyles((theme) => ({
+  alert: {
+    position: "absolute",
+    top: '4rem',
+    right: 0,
+    zIndex: 1,
+  },
   page: {
     flexDirection: 'column',
     minHeight: '100vh',
