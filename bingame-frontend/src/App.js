@@ -20,7 +20,6 @@ import { selectUser } from "./features/User/UserSlice";
 function App() {
   const classes = useStyles();
   const user = useSelector(selectUser);
-console.log(user)
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>
@@ -31,12 +30,7 @@ console.log(user)
             <source src="video/bg.mp4" type="video/mp4" />
           </video>
           <Switch>
-            <Route exact path="/" component={PublicHomePage} />
-            <Route exact path="/login" component={Login} />
-            <Route exac path="/signup" component={Register} />
-            <Route exac path="/forgotpassword" component={ForgotPassword} />
-
-            {/* <Route exact path="/">
+            <Route exact path="/">
               {user.loggedIn ? <Redirect to="/menu" /> : <PublicHomePage />}
             </Route>
 
@@ -54,10 +48,10 @@ console.log(user)
 
             <Route exact path="/menu">
               {!user.loggedIn ? <Redirect to="/" /> : <PrivateHomePage />}
-            </Route> */}
-            <MenuPageRoute exact path="/menu" component={PrivateHomePage} />
+            </Route>
 
             <Route component={NotFound} />
+            
           </Switch>
           <Footer />
         </Grid>
