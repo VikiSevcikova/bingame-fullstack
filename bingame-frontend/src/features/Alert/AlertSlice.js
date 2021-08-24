@@ -23,13 +23,13 @@ export const alertSlice = createSlice({
       state.value.show = true;
     },
     hideAlert: (state) => {
-        state = initialState;
+        state.value = initialState;
     }
   },
 });
 
 export const { showAlert, hideAlert } = alertSlice.actions;
 
-export const selectAlert = (state) => state.value;
+export const selectAlert = (state) => state.alert.value;
 
 export default alertSlice.reducer;

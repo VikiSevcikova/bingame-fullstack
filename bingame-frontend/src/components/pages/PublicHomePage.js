@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
 import { Container, Grid, Typography } from "@material-ui/core";
 
-function MainPage() {
+function PublicHomePage() {
   const classes = useStyles();
 
   return (
@@ -48,4 +48,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default PublicHomePage;

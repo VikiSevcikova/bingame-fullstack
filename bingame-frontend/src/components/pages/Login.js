@@ -15,6 +15,7 @@ import clsx from "clsx";
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
+import { logIn } from "../../features/User/UserSlice";
 
 function Login({history}) {
   const classes = useStyles();
@@ -22,25 +23,33 @@ function Login({history}) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const loginHandler = async (e) => {
     e.preventDefault();
+
+    const token = Buffer.from(`${email}:${password}`, 'utf8').toString('base64')
+
     const config = {
-      header: {
+      headers: {
         "Content-Type": "application/json",
+        'Authorization': 'Basic ' + token,
       },
     };
 
     try {
       const { data } = await axios.post(
         "http://localhost:5000/auth/login",
-        { email, password },
+        JSON.stringify({ email, password }),
         config
       );
-      // localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authToken", data.token);
+      dispatch(logIn({username: data.user?.username, email: data.user?.email}))
+      dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
 
-      history.push("/");
+      history.push("/menu");
     } catch (error) {
       dispatch(showAlert({type: 'error', message: error.response.data.error, show: true}));
       setTimeout(() => {
@@ -63,7 +72,6 @@ function Login({history}) {
             >
               Log in
             </Typography>
-            {error && <span>{error}</span>}
             <TextField
               fullWidth
               margin="normal"
@@ -74,6 +82,7 @@ function Login({history}) {
               type="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <TextField
@@ -85,6 +94,7 @@ function Login({history}) {
               variant="outlined"
               type="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <FormControlLabel

@@ -1,23 +1,26 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import "./App.css";
-import MainPage from "./components/pages/MainPage.js";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import MenuPageRoute from "./components/routes/MenuPageRoute";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useStyles, darkTheme } from "./components/Theme";
 import ForgotPassword from "./components/pages/ForgotPassword";
 import AlertMessage from "./components/AlertMessage";
-import MenuPageRoute from "./components/routes/MenuPageRoute";
-import MenuPage from "./components/pages/MenuPage";
 import NotFound from "./components/pages/NotFound";
+import PrivateHomePage from "./components/pages/PrivateHomePage";
+import PublicHomePage from "./components/pages/PublicHomePage";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/User/UserSlice";
 
 function App() {
   const classes = useStyles();
-
+  const user = useSelector(selectUser);
+console.log(user)
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>
@@ -28,12 +31,31 @@ function App() {
             <source src="video/bg.mp4" type="video/mp4" />
           </video>
           <Switch>
-            <Route exact path="/" component={MainPage} />
+            <Route exact path="/" component={PublicHomePage} />
             <Route exact path="/login" component={Login} />
             <Route exac path="/signup" component={Register} />
             <Route exac path="/forgotpassword" component={ForgotPassword} />
 
-            <MenuPageRoute exact path="/menu" component={MenuPage} />
+            {/* <Route exact path="/">
+              {user.loggedIn ? <Redirect to="/menu" /> : <PublicHomePage />}
+            </Route>
+
+            <Route exact path="/login">
+              {user.loggedIn ? <Redirect to="/menu" /> : <Login />}
+            </Route>
+
+            <Route exact path="/signup">
+              {user.loggedIn ? <Redirect to="/menu" /> : <Register />}
+            </Route>
+
+            <Route exact path="/forgetpassword">
+              {user.loggedIn ? <Redirect to="/menu" /> : <ForgotPassword />}
+            </Route>
+
+            <Route exact path="/menu">
+              {!user.loggedIn ? <Redirect to="/" /> : <PrivateHomePage />}
+            </Route> */}
+            <MenuPageRoute exact path="/menu" component={PrivateHomePage} />
 
             <Route component={NotFound} />
           </Switch>

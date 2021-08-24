@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
 import { Container, Grid, Typography } from "@material-ui/core";
 
-function MenuPage() {
+function PrivateHomePage() {
   const classes = useStyles();
 
   return (
@@ -23,4 +23,4 @@ function MenuPage() {
   );
 }
 
-export default MenuPage;
+export default PrivateHomePage;
