@@ -5,16 +5,61 @@ import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
 import { Container, CssBaseline } from "@material-ui/core";
 import clsx from "clsx";
+import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
+import { logIn } from "../../features/User/UserSlice";
 
-function Register() {
+function Register({history}) {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
-  const registerHandler = async (e) => {};
+  const registerHandler = async (e) => {
+    e.preventDefault();
+
+    // const token = Buffer.from(`${email}:${password}`, 'utf8').toString('base64')
+    if(password !== confirmedPassword){
+      setPassword("");
+      setConfirmedPassword("");
+      dispatch(showAlert({type: 'warning', message: 'Passwords do not match!', show: true}));
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        // 'Authorization': 'Basic ' + token,
+      },
+    };
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/auth/register",
+        JSON.stringify({username, email, password }),
+        config
+      );
+      localStorage.setItem("authToken", data.token);
+      dispatch(logIn({username: data.user?.username, email: data.user?.email}))
+      dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
+
+      history.push("/menu");
+    } catch (error) {
+      dispatch(showAlert({type: 'error', message: error.response.data.error, show: true}));
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
+    }
+
+  };
 
   return (
     <>
@@ -31,7 +76,6 @@ function Register() {
             >
               Sign Up
             </Typography>
-            {error && <span className="error">{error}</span>}
             <TextField
               className={classes.input}
               fullWidth
@@ -41,6 +85,8 @@ function Register() {
               label="Username"
               variant="outlined"
               type="text"
+              onChange={(e) => setUsername(e.target.value)}
+
             />
             <TextField
               className={classes.input}
@@ -52,6 +98,7 @@ function Register() {
               variant="outlined"
               type="email"
               autoComplete="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               className={classes.input}
@@ -62,6 +109,7 @@ function Register() {
               label="Password"
               variant="outlined"
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <TextField
               className={classes.input}
@@ -72,6 +120,7 @@ function Register() {
               label="Confirmed Password"
               variant="outlined"
               type="password"
+              onChange={(e) => setConfirmedPassword(e.target.value)}
             />
 
             <Button
