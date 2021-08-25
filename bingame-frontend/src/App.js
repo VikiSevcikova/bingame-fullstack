@@ -30,25 +30,15 @@ function App() {
             <source src="video/bg.mp4" type="video/mp4" />
           </video>
           <Switch>
-            <Route exact path="/">
-              {user.loggedIn ? <Redirect to="/menu" /> : <PublicHomePage />}
-            </Route>
+            <Route exact path="/" component={PublicHomePage} />
 
-            <Route exact path="/login">
-              {user.loggedIn ? <Redirect to="/menu" /> : <Login />}
-            </Route>
+            <Route exact path="/login" component={Login} />
 
-            <Route exact path="/signup">
-              {user.loggedIn ? <Redirect to="/menu" /> : <Register />}
-            </Route>
+            <Route exact path="/signup" component={Register} />
 
-            <Route exact path="/forgetpassword">
-              {user.loggedIn ? <Redirect to="/menu" /> : <ForgotPassword />}
-            </Route>
+            <Route exact path="/forgotpassword" component={ForgotPassword} />
 
-            <Route exact path="/menu">
-              {!user.loggedIn ? <Redirect to="/" /> : <PrivateHomePage />}
-            </Route>
+            <MenuPageRoute exact path="/menu" component={PrivateHomePage} />
 
             <Route component={NotFound} />
             

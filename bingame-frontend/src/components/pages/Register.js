@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -17,6 +17,10 @@ function Register({history}) {
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(localStorage.getItem("authToken")) history.push("/menu");
+  },[history]);
 
   const registerHandler = async (e) => {
     e.preventDefault();
@@ -45,14 +49,17 @@ function Register({history}) {
         config
       );
       localStorage.setItem("authToken", data.token);
+
+      history.push("/menu");
+
       dispatch(logIn({username: data.user?.username, email: data.user?.email}))
       dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);
 
-      history.push("/menu");
     } catch (error) {
+      console.log(error)
       dispatch(showAlert({type: 'error', message: error.response.data.error, show: true}));
       setTimeout(() => {
         dispatch(hideAlert());

@@ -1,18 +1,31 @@
-import React from "react";
+import React, {useEffect} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useStyles } from "./Theme";
 import Link from "@material-ui/core/Link";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import { Container } from "@material-ui/core";
+import { selectUser, logOut } from ".././features/User/UserSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Header() {
   const classes = useStyles();
   const url = useLocation();
   const pathname = url.pathname;
+  let history = useHistory();
+
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("authToken");
+    dispatch(logOut());
+    console.log(user)
+    history.push("/");
+  }
 
   return (
     <div className={classes.header}>
@@ -29,7 +42,26 @@ export default function Header() {
               BinGame{" "}
             </Link>
             <div className={classes.grow} />
-            {pathname === "/login" ? (
+            {user.loggedIn && pathname !== '/' ? (
+              <>
+                <Typography
+                  variant="body1"
+                  color="primary"
+                  style={{ marginRight: "10px" }}
+                >
+                  {" "}
+                  Hi {user.username}{" "}
+                </Typography>
+                <Button
+                  className={classes.btn}
+                  variant="contained"
+                  color="primary"
+                  onClick={logoutHandler}
+                >
+                  Log Out
+                </Button>
+              </>
+            ) : pathname === "/login" ? (
               <>
                 <Typography variant="body1" color="primary">
                   {" "}

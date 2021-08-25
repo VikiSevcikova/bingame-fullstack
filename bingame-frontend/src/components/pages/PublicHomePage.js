@@ -4,8 +4,12 @@ import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
 import { Container, Grid, Typography } from "@material-ui/core";
 
-function PublicHomePage() {
+function PublicHomePage({history}) {
   const classes = useStyles();
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) history.push("/menu");
+  }, [history]);
 
   return (
     <>

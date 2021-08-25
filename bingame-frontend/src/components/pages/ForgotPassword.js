@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -6,10 +6,14 @@ import { useStyles } from "../Theme";
 import { Container, CssBaseline } from "@material-ui/core";
 import clsx from "clsx";
 
-function ForgotPassword() {
+function ForgotPassword({history}) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) history.push("/menu");
+  }, [history]);
 
   const loginHandler = async (e) => {};
   return (
