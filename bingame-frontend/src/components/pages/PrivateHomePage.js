@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
 import { selectUser } from "../../features/User/UserSlice";

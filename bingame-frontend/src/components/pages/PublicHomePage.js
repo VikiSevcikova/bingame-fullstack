@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
@@ -11,6 +11,7 @@ function PublicHomePage({history}) {
   const user = useSelector(selectUser);
 
   useEffect(() => {
+    //if the user is logged in then redirect
     if (user.loggedIn) history.push("/menu");
   }, [history]);
 

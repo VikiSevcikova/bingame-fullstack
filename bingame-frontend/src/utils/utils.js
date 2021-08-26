@@ -7,10 +7,20 @@ export const setCurrentUser = (user) => {
 };
 
 export const getCurrentUser = () => {
-  let user = null;
-  user =
-    localStorage.getItem("bingameUser") != null
-      ? JSON.parse(localStorage.getItem("bingameUser"))
-      : null;
-  return user;
+  if (localStorage.getItem("bingameUser")) {
+    return JSON.parse(localStorage.getItem("bingameUser"));
+  } else {
+    return null;
+  }
+};
+
+export const isAuth = () => {
+  if (
+    localStorage.getItem("authToken") ||
+    sessionStorage.getItem("authToken")
+  ) {
+    return true;
+  } else {
+    return false;
+  }
 };

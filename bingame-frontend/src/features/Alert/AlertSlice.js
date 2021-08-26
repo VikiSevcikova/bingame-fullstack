@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: {
@@ -11,13 +11,12 @@ const initialState = {
 export const alertSlice = createSlice({
   name: 'alert',
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     showAlert: (state, action) => {
       state.value = action.payload
     },
     hideAlert: (state) => {
-        state.value = initialState;
+        state.value.show = false;
     }
   },
 });

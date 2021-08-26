@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import "./App.css";
 import Header from "./components/Header";
@@ -14,12 +14,10 @@ import AlertMessage from "./components/AlertMessage";
 import NotFound from "./components/pages/NotFound";
 import PrivateHomePage from "./components/pages/PrivateHomePage";
 import PublicHomePage from "./components/pages/PublicHomePage";
-import { useSelector } from "react-redux";
-import { selectUser } from "./features/User/UserSlice";
 
 function App() {
   const classes = useStyles();
-  const user = useSelector(selectUser);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>

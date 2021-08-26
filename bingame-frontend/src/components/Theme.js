@@ -1,5 +1,5 @@
 import { createTheme, makeStyles } from "@material-ui/core/styles";
-import { grey, lightBlue } from "@material-ui/core/colors";
+import { lightBlue } from "@material-ui/core/colors";
 
 export const darkTheme = createTheme({
   palette: {
@@ -8,10 +8,7 @@ export const darkTheme = createTheme({
       main: lightBlue[50],
       light: lightBlue[50],
       dark: lightBlue[50],
-    },
-    secondary: {
-      main: lightBlue[50],
-    },
+    }
   },
   typography: {
     fontFamily: [

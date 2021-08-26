@@ -28,24 +28,17 @@ function Login({history}) {
   const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
+    //if in the store loggedIn is not null so the user is logged in 
     if (user.loggedIn) history.push("/menu");
   }, [history]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
 
-    const token = Buffer.from(`${email}:${password}`, 'utf8').toString('base64')
-
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Basic ' + token,
+        "Content-Type": "application/json"
       }
-      // ,
-      // auth: {
-      //   email: email,
-      //   password: password
-      // }
     };
 
     try {
@@ -54,21 +47,25 @@ function Login({history}) {
         JSON.stringify({ email, password }),
         config
       );
+
+      //based on remember me checkbox save the authToken
+      //save to local if the user want to be remembered so after the window is closed we still have info that user is authentificated
       if(rememberMe){
         localStorage.setItem("authToken", data.token);
       }else{
         sessionStorage.setItem("authToken", data.token);
       }
-      console.log(rememberMe);
-      console.log(data);
-
+      //save data about user to local storage
       setCurrentUser(data.user);
+      //save data to the store
       dispatch(logIn());
+      //show message that the user was logged in
       dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
+      //hide message after 5s
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);
-
+      //redirect to private main page
       history.push("/menu");
     } catch (error) {
       dispatch(showAlert({type: 'error', message: error.response?.data.error, show: true}));

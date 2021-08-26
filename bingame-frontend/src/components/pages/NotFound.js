@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, CssBaseline, Grid, Typography } from "@material-ui/core";
+import { Container, CssBaseline, Typography } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import { useStyles } from "../Theme";
 

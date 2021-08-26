@@ -22,17 +22,18 @@ function Register({history}) {
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
   useEffect(() => {
+    //if the user is logged in then redirect
     if (user.loggedIn) history.push("/menu");
   }, [history]);
 
   const registerHandler = async (e) => {
     e.preventDefault();
 
-    // const token = Buffer.from(`${email}:${password}`, 'utf8').toString('base64')
+    //check if the password and confirmed password are the same
     if(password !== confirmedPassword){
       setPassword("");
       setConfirmedPassword("");
-      dispatch(showAlert({type: 'warning', message: 'Passwords do not match!', show: true}));
+      dispatch(showAlert({type: 'error', message: 'Passwords do not match!', show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);
@@ -41,11 +42,6 @@ function Register({history}) {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // 'Authorization': 'Basic ' + token,
-      },
-      auth: {
-        email: email,
-        password: password
       }
     };
 
@@ -56,18 +52,23 @@ function Register({history}) {
         config
       );
 
-      history.push("/menu");
       console.log(data);
 
+      //save authtoken in session storage
       sessionStorage.setItem("authToken", data.token);
+
+      //save data about user to local storage
       setCurrentUser(data.user);
+      //save data to the store
       dispatch(logIn());
 
       dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);
-
+      
+      //redirect to private main page
+      history.push("/menu");
     } catch (error) {
       dispatch(showAlert({type: 'error', message: error.response?.data.error, show: true}));
       setTimeout(() => {
