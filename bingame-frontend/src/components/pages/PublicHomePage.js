@@ -13,7 +13,7 @@ function PublicHomePage({history}) {
 
   return (
     <>
-      <Grid md={10} lg={8} container className={classes.grow} alignItems="center" style={{margin:"auto"}}>
+      <Grid item md={8} container alignItems="center" style={{margin:"auto"}} className={classes.grow}>
         <CssBaseline />
         <Grid item xs={12} md={6} style={{padding:"2rem"}}>
             <Typography variant="h3">Let's learn together how to convert decimal number to binary.</Typography>
@@ -21,7 +21,7 @@ function PublicHomePage({history}) {
               Computers use the binary number system to manipulate and store all of their data including numbers, words, videos, graphics, and music.
             </Typography>
           </Grid>
-        <Grid item xs={12} md={6} style={{textAlign:"center", padding:"2rem"}} alignItems="center">
+        <Grid item  xs={12} md={6} style={{textAlign:"center", padding:"2rem"}}>
           <Typography variant="h5">
               Start with
             </Typography>
@@ -46,8 +46,6 @@ function PublicHomePage({history}) {
           >
             Sign Up
           </Button>
-          <Button onClick={getUsers}>get users</Button>
-        <p>{users}</p>
           </Grid>
       </Grid>
     </>
