@@ -16,6 +16,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
 import { logIn } from "../../features/User/UserSlice";
+import { setCurrentUser } from "../../utils/utils";
 
 function Login({history}) {
   const classes = useStyles();
@@ -23,6 +24,7 @@ function Login({history}) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) history.push("/menu");
@@ -37,17 +39,23 @@ function Login({history}) {
       headers: {
         "Content-Type": "application/json",
         'Authorization': 'Basic ' + token,
-      },
+      }
+      // ,
+      // auth: {
+      //   email: email,
+      //   password: password
+      // }
     };
 
     try {
       const { data } = await axios.post(
         "http://localhost:5000/auth/login",
-        JSON.stringify({ email, password }),
+        JSON.stringify({ email, password, rememberMe }),
         config
       );
       localStorage.setItem("authToken", data.token);
-      dispatch(logIn({username: data.user?.username, email: data.user?.email}))
+      setCurrentUser(data.user);
+      dispatch(logIn());
       dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
@@ -55,7 +63,7 @@ function Login({history}) {
 
       history.push("/menu");
     } catch (error) {
-      dispatch(showAlert({type: 'error', message: error.response.data.error, show: true}));
+      dispatch(showAlert({type: 'error', message: error.response?.data.error, show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);
@@ -104,6 +112,7 @@ function Login({history}) {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
+              onChange={()=>setRememberMe(!rememberMe)}
             />
 
             <Button

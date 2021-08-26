@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getCurrentUser } from '../../utils/utils';
 
 const initialState = {
   value: {
-    username: '',
-    email: '',
+    data: getCurrentUser(),
     loggedIn: localStorage.getItem("authToken")
-  }
+  },
 };
 
 export const userSlice = createSlice({
@@ -13,8 +13,8 @@ export const userSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    logIn: (state, action) => {
-      state.value = action.payload;
+    logIn: (state) => {
+      state.value.data = getCurrentUser();
       state.value.loggedIn = localStorage.getItem("authToken");
     },
     logOut: (state) => {

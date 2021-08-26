@@ -9,6 +9,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
 import { logIn } from "../../features/User/UserSlice";
+import { setCurrentUser } from "../../utils/utils";
 
 function Register({history}) {
   const classes = useStyles();
@@ -40,6 +41,10 @@ function Register({history}) {
         "Content-Type": "application/json",
         // 'Authorization': 'Basic ' + token,
       },
+      auth: {
+        email: email,
+        password: password
+      }
     };
 
     try {
@@ -48,19 +53,21 @@ function Register({history}) {
         JSON.stringify({username, email, password }),
         config
       );
-      localStorage.setItem("authToken", data.token);
 
       history.push("/menu");
+      console.log(data);
 
-      dispatch(logIn({username: data.user?.username, email: data.user?.email}))
+      localStorage.setItem("authToken", data.token);
+      setCurrentUser(data.user);
+      dispatch(logIn());
+
       dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);
 
     } catch (error) {
-      console.log(error)
-      dispatch(showAlert({type: 'error', message: error.response.data.error, show: true}));
+      dispatch(showAlert({type: 'error', message: error.response?.data.error, show: true}));
       setTimeout(() => {
         dispatch(hideAlert());
       }, 5000);

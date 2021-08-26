@@ -19,14 +19,13 @@ export default function Header() {
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-
+console.log(user)
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("bingameUser");
     dispatch(logOut());
-    console.log(user)
     history.push("/");
   }
-
   return (
     <div className={classes.header}>
       <AppBar position="static">
@@ -50,7 +49,7 @@ export default function Header() {
                   style={{ marginRight: "10px" }}
                 >
                   {" "}
-                  Hi {user.username}{" "}
+                  Hi {user.data.username}{" "}
                 </Typography>
                 <Button
                   className={classes.btn}

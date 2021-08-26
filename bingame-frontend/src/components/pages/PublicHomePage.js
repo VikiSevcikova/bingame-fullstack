@@ -46,6 +46,8 @@ function PublicHomePage({history}) {
           >
             Sign Up
           </Button>
+          <Button onClick={getUsers}>get users</Button>
+        <p>{users}</p>
           </Grid>
       </Grid>
     </>
