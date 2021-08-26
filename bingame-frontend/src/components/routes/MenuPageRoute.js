@@ -1,11 +1,15 @@
 import { Redirect, Route } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { selectUser } from "../../features/User/UserSlice";
 
 const MenuPageRoute = ({ component: Component, ...rest }) => {
-    return (
+  const user = useSelector(selectUser);
+
+  return (
       <Route
         {...rest}
         render={(props) =>
-          localStorage.getItem("authToken") ? (
+          user.loggedIn ? (
             <Component {...props} />
           ) : (
             <Redirect to="/" />

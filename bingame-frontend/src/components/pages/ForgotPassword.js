@@ -5,14 +5,17 @@ import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
 import { Container, CssBaseline } from "@material-ui/core";
 import clsx from "clsx";
+import { useSelector } from 'react-redux';
+import { selectUser } from "../../features/User/UserSlice";
 
 function ForgotPassword({history}) {
   const classes = useStyles();
+  const user = useSelector(selectUser);
+
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) history.push("/menu");
+    if (user.loggedIn) history.push("/menu");
   }, [history]);
 
   const loginHandler = async (e) => {};
@@ -31,7 +34,6 @@ function ForgotPassword({history}) {
               address below. We'll email you a link to a page where you can
               easily create a new password.
             </Typography>
-            {error && <span>{error}</span>}
             <TextField
               fullWidth
               margin="normal"

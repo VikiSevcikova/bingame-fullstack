@@ -6,22 +6,24 @@ import { useStyles } from "../Theme";
 import { Container, CssBaseline } from "@material-ui/core";
 import clsx from "clsx";
 import axios from "axios";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
-import { logIn } from "../../features/User/UserSlice";
+import { selectUser, logIn } from "../../features/User/UserSlice";
 import { setCurrentUser } from "../../utils/utils";
 
 function Register({history}) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
-  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(localStorage.getItem("authToken")) history.push("/menu");
-  },[history]);
+  useEffect(() => {
+    if (user.loggedIn) history.push("/menu");
+  }, [history]);
 
   const registerHandler = async (e) => {
     e.preventDefault();
@@ -57,7 +59,7 @@ function Register({history}) {
       history.push("/menu");
       console.log(data);
 
-      localStorage.setItem("authToken", data.token);
+      sessionStorage.setItem("authToken", data.token);
       setCurrentUser(data.user);
       dispatch(logIn());
 

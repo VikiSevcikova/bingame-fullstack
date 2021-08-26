@@ -2,18 +2,21 @@ import React, {useState, useEffect} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
+import { useSelector } from 'react-redux';
+import { selectUser } from "../../features/User/UserSlice";
 
 function PublicHomePage({history}) {
   const classes = useStyles();
+  const user = useSelector(selectUser);
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) history.push("/menu");
+    if (user.loggedIn) history.push("/menu");
   }, [history]);
 
   return (
     <>
-      <Grid item md={8} container alignItems="center" style={{margin:"auto"}} className={classes.grow}>
+      <Grid item md={8} container alignItems="center" className={classes.grow} style={{margin:"auto"}}>
         <CssBaseline />
         <Grid item xs={12} md={6} style={{padding:"2rem"}}>
             <Typography variant="h3">Let's learn together how to convert decimal number to binary.</Typography>

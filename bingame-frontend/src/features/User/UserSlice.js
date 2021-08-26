@@ -4,7 +4,7 @@ import { getCurrentUser } from '../../utils/utils';
 const initialState = {
   value: {
     data: getCurrentUser(),
-    loggedIn: localStorage.getItem("authToken")
+    loggedIn: localStorage.getItem("authToken") ? localStorage.getItem("authToken") : sessionStorage.getItem("authToken")
   },
 };
 
@@ -15,10 +15,11 @@ export const userSlice = createSlice({
   reducers: {
     logIn: (state) => {
       state.value.data = getCurrentUser();
-      state.value.loggedIn = localStorage.getItem("authToken");
+      state.value.loggedIn = localStorage.getItem("authToken") ? localStorage.getItem("authToken") : sessionStorage.getItem("authToken");
     },
     logOut: (state) => {
-        state = initialState;
+      state.value.data = null;
+      state.value.loggedIn = null;
     }
   },
 });

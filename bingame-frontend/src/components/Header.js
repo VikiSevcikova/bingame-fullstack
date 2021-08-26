@@ -18,9 +18,11 @@ export default function Header() {
   let history = useHistory();
 
   const user = useSelector(selectUser);
+  console.log(user)
   const dispatch = useDispatch();
-console.log(user)
+
   const logoutHandler = () => {
+    sessionStorage.removeItem("authToken");
     localStorage.removeItem("authToken");
     localStorage.removeItem("bingameUser");
     dispatch(logOut());

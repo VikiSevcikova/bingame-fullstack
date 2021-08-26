@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 function PrivateHomePage() {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const user = useSelector(selectUser);
   const [users, setUsers] = useState('');
 
@@ -44,7 +45,7 @@ function PrivateHomePage() {
   }
   return (
     <>
-      <Grid md={10} lg={8} container className={classes.grow} alignItems="center" style={{margin:"auto"}}>
+      <Grid item md={10} lg={8} container alignItems="center" className={classes.grow} style={{margin:"auto"}}>
         <CssBaseline />
         <Grid item xs={12} md={6} style={{padding:"2rem"}}>
             <Typography variant="h3">Let's learn together how to convert decimal number to binary.</Typography>

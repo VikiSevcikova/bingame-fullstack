@@ -13,21 +13,22 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import axios from "axios";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
-import { logIn } from "../../features/User/UserSlice";
+import { selectUser, logIn } from "../../features/User/UserSlice";
 import { setCurrentUser } from "../../utils/utils";
 
 function Login({history}) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) history.push("/menu");
+    if (user.loggedIn) history.push("/menu");
   }, [history]);
 
   const loginHandler = async (e) => {
@@ -50,10 +51,17 @@ function Login({history}) {
     try {
       const { data } = await axios.post(
         "http://localhost:5000/auth/login",
-        JSON.stringify({ email, password, rememberMe }),
+        JSON.stringify({ email, password }),
         config
       );
-      localStorage.setItem("authToken", data.token);
+      if(rememberMe){
+        localStorage.setItem("authToken", data.token);
+      }else{
+        sessionStorage.setItem("authToken", data.token);
+      }
+      console.log(rememberMe);
+      console.log(data);
+
       setCurrentUser(data.user);
       dispatch(logIn());
       dispatch(showAlert({type: 'success', message: 'You are logged in!', show: true}));
