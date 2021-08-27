@@ -14,6 +14,7 @@ import AlertMessage from "./components/AlertMessage";
 import NotFound from "./components/pages/NotFound";
 import PrivateHomePage from "./components/pages/PrivateHomePage";
 import PublicHomePage from "./components/pages/PublicHomePage";
+import ResetPassword from "./components/pages/ResetPassword";
 
 function App() {
   const classes = useStyles();
@@ -25,7 +26,7 @@ function App() {
           <AlertMessage />
           <Header />
           <video autoPlay muted loop className={classes.video}>
-            <source src="video/bg.mp4" type="video/mp4" />
+            <source src="../../video/bg.mp4" type="video/mp4" />
           </video>
           <Switch>
             <Route exact path="/" component={PublicHomePage} />
@@ -35,6 +36,8 @@ function App() {
             <Route exact path="/signup" component={Register} />
 
             <Route exact path="/forgotpassword" component={ForgotPassword} />
+
+            <Route exact path="/resetpassword/:resetToken" component={ResetPassword} />
 
             <MenuPageRoute exact path="/menu" component={PrivateHomePage} />
 

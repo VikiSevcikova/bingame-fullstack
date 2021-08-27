@@ -5,11 +5,14 @@ import Button from "@material-ui/core/Button";
 import { useStyles } from "../Theme";
 import { Container, CssBaseline } from "@material-ui/core";
 import clsx from "clsx";
-import { useSelector } from 'react-redux';
+import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from "../../features/User/UserSlice";
+import { hideAlert, showAlert } from "../../features/Alert/AlertSlice";
 
 function ForgotPassword({history}) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   const [email, setEmail] = useState("");
@@ -18,13 +21,40 @@ function ForgotPassword({history}) {
     if (user.loggedIn) history.push("/menu");
   }, [history]);
 
-  const loginHandler = async (e) => {};
+  const sendMail = async (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/auth/forgotpassword",
+        JSON.stringify({ email }),
+        config
+      );
+      dispatch(showAlert({type: 'success', message: data.data, show: true}));
+      //hide message after 5s
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
+    } catch (error) {
+      dispatch(showAlert({type: 'error', message: error.response?.data.error, show: true}));
+      setTimeout(() => {
+        dispatch(hideAlert());
+      }, 5000);
+    } finally {
+      setEmail("");
+    }
+  };
   return (
     <>
       <Container component="main" maxWidth="sm" className={classes.grow}>
         <CssBaseline />
         <div className={classes.paper}>
-          <form onSubmit={loginHandler} className={classes.form}>
+          <form onSubmit={sendMail} className={classes.form}>
             <Typography variant="h5" gutterBottom className={classes.formTitle}>
               Forgot your password?
             </Typography>
@@ -44,6 +74,8 @@ function ForgotPassword({history}) {
               type="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
             />
 
             <Button
